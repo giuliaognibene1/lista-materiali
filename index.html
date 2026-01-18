@@ -195,18 +195,23 @@ function generaPDF() {
     const err = document.getElementById("errore");
     err.innerText = "";
 
-    if (res.errore) { err.innerText = res.errore; return; }
+    if (res.errore) {
+        err.innerText = res.errore;
+        return;
+    }
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // Logo
+    // Caricamento logo
     const logo = new Image();
     logo.src = "logo.png";
-    
+
     logo.onload = function () {
+
+        // Logo
         doc.addImage(logo, "PNG", 10, 8, 30, 15);
-    
+
         // Dati azienda
         doc.setFontSize(10);
         doc.text("AGRO+ SRL", 45, 12);
@@ -214,20 +219,24 @@ function generaPDF() {
         doc.text("42021 Bibbiano (RE)", 45, 22);
         doc.text("info@agropiu.com", 45, 27);
         doc.text("0522 875924", 45, 32);
-    
+
         // Cliente
         doc.setFontSize(12);
         doc.text("Cliente: " + res.cliente, 10, 45);
-    
+
+        // Corpo lista materiali
         let y = 60;
         res.dati.forEach(d => {
+            doc.setFontSize(11);
             doc.text(`${d[0]} - ${d[1]} ${d[2]}`, 10, y);
             y += 8;
         });
-    
+
+        // Salvataggio e reset
         doc.save(`Lista_materiali_${res.cliente}.pdf`);
         resetModulo();
-};
+    };
+}
 
 function generaExcel() {
     const res = raccogliDati();

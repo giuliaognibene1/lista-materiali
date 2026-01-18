@@ -169,6 +169,8 @@ button {
 <script>
     // --- Firma su canvas ---
 const canvas = document.getElementById('firma');
+canvas.width = canvas.offsetWidth; // larghezza reale del canvas
+canvas.height = 150; // altezza reale del canvas
 const ctx = canvas.getContext('2d');
 let disegnando = false;
 
